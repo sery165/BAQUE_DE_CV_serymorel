@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter une compétence{% endblock %}
+
+{% block content %}
+<h1>Ajouter une compétence</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    
+    <!-- Nom de la compétence -->
+    <div class="form-group">
+        <label for="nom">Nom de la compétence :</label>
+        <input type="text" class="form-control" name="nom" id="nom" required>
+    </div>
+
+    <!-- Niveau de compétence -->
+    <div class="form-group">
+        <label for="niveau">Niveau :</label>
+        <input type="text" class="form-control" name="niveau" id="niveau" required>
+    </div>
+
+    <!-- Soumettre le formulaire -->
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </div>
+</form>
+
+<a href="{% url 'view_competences' %}" class="btn btn-secondary mt-3">
+    Voir mes compétences
+</a>
+{% endblock %}

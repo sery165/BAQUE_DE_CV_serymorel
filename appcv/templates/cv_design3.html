@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Design 3</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .cv-container {
+            max-width: 800px;
+            margin: 60px auto;
+            background-color: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            font-family: 'Open Sans', sans-serif;
+            color: #2d3436;
+            margin: 0;
+        }
+
+        /* Header */
+        .cv-header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #00bcd4;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        .cv-header h1 {
+            font-size: 32px;
+            color: #00bcd4;
+        }
+        .cv-header p {
+            font-size: 16px;
+            color: #7f8c8d;
+        }
+        .cv-header .photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 30px;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #00bcd4;
+            margin-top: 40px;
+            border-bottom: 2px solid #00bcd4;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* Section Content */
+        .section-content {
+            margin-top: 15px;
+        }
+        .section-content ul {
+            list-style: none;
+            padding: 0;
+        }
+        .section-content li {
+            margin-bottom: 12px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .section-content .petititre {
+            font-weight: 700;
+            color: #2d3436;
+        }
+        .section-content .description {
+            font-style: italic;
+        }
+
+        /* Section Icons */
+        .icon {
+            color: #00bcd4;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .cv-container {
+                padding: 20px;
+                max-width: 100%;
+            }
+            .cv-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .cv-header h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cv-container">
+        <!-- Header -->
+        <div class="cv-header">
+            <div class="personal-info">
+                <h1>{{ cv.personne.nom }} {{ cv.personne.prenom }}</h1>
+                <p>{{ cv.contact.email }} | {{ cv.contact.telephone }}</p>
+            </div>
+            <div class="photo">
+                {% if cv.personne.photo %}
+                    <img src="{{ cv.personne.photo.url }}" alt="Photo de {{ cv.personne.prenom }} {{ cv.personne.nom }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/120" alt="Photo par défaut">
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Experiences -->
+        <div class="section">
+            <div class="section-title">Expériences</div>
+            <div class="section-content">
+                <ul>
+                    {% for experience in experiences %}
+                        <li>
+                            <span class="petititre">{{ experience.titre }}</span> - {{ experience.entreprise }} (<span class="petititre">{{ experience.date_debut }} - {{ experience.date_fin }}</span>)
+                            <br>
+                            <span class="description">{{ experience.description }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Formations -->
+        <div class="section">
+            <div class="section-title">Formations</div>
+            <div class="section-content">
+                <ul>
+                    {% for formation in formations %}
+                        <li>
+                            <span class="petititre">{{ formation.diplome }}</span> - {{ formation.institution }} 
+                            (<span class="petititre">{{ formation.date_debut }} - {{ formation.date_fin }}</span>)
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Compétences -->
+        <div class="section">
+            <div class="section-title">Compétences</div>
+            <div class="section-content">
+                <ul>
+                    {% for competence in competences %}
+                        <li>
+                            <span class="petititre">{{ competence.nom }}</span> - Niveau: {{ competence.niveau }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Langues -->
+        <div class="section">
+            <div class="section-title">Langues</div>
+            <div class="section-content">
+                <ul>
+                    {% for langue in langues %}
+                        <li>
+                            <span class="petititre">{{ langue.langue }}</span> - Niveau: {{ langue.niveau }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Loisirs -->
+        <div class="section">
+            <div class="section-title">Loisirs</div>
+            <div class="section-content">
+                <ul>
+                    {% for loisir in loisirs %}
+                        <li>{{ loisir.nom }} - {{ loisir.description }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmer la suppression - {{ cv.personne.nom }} {{ cv.personne.prenom }}{% endblock %}
+
+{% block content %}
+    <div class="confirmation-container" style="text-align: center;">
+        <h1 style="font-size: 2rem; color: #dc3545;">Confirmer la suppression</h1>
+        <p>Êtes-vous sûr de vouloir supprimer le CV de <strong>{{ cv.personne.nom }} {{ cv.personne.prenom }}</strong> ?</p>
+        
+        <!-- Formulaire de suppression -->
+        <form method="POST">
+            {% csrf_token %}
+            <div class="action-buttons">
+                <button type="submit" class="btn" style="background-color: #dc3545; color: white;">Supprimer</button>
+            </div>
+        </form>
+
+        <!-- Lien pour annuler la suppression -->
+        <div class="action-buttons">
+            <a href="{% url 'view_cvs' %}">
+                <button type="button" class="btn" style="background-color: #6c757d; color: white;">Annuler</button>
+            </a>
+        </div>
+    </div>
+{% endblock %}

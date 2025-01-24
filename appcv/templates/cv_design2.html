@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV design 2</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'cv_a.css' %}">
+</head>
+
+<body>
+
+    <!-- Boutons d'action -->
+    <div class="action-buttons">
+        <!-- Bouton pour imprimer -->
+        <button class="btn-print" onclick="window.print()">Imprimer</button>
+
+        <!-- Bouton pour modifier -->
+        <form action="{% url 'edit_cv' cv.id %}" method="GET" style="display:inline;">
+            <button class="btn-edit" type="submit">Modifier</button>
+        </form>
+
+        <!-- Bouton pour envoyer par e-mail -->
+        <form action="{% url 'send_cv_email' cv.id %}" method="GET" style="display:inline;">
+            {% csrf_token %}
+            <button class="btn-email" type="submit">Envoyer par e-mail</button>
+        </form>
+
+        <!-- Bouton pour supprimer -->
+        <form action="{% url 'delete_cv' cv.id %}" method="POST" style="display:inline;">
+            {% csrf_token %}
+            <button class="btn-delete" type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce CV ?');">Supprimer</button>
+        </form>
+    </div>
+
+    <div class="cv">
+        <!-- Affichage Nom et Photo -->
+        <div class="im_nompre">
+            <div class="im">
+                <!-- Affichage de la photo -->
+                {% if cv.personne.photo %}
+                    <img src="{{ cv.personne.photo.url }}" alt="Photo de {{ cv.personne.prenom }} {{ cv.personne.nom }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/100" alt="Photo par défaut">
+                {% endif %}
+            </div>
+            <div class="nompre">
+                <p><strong>Nom et Prénom</strong></p>
+                <h3>{{ personne.nom }} {{ personne.prenom }}</h3>
+                <hr>
+            </div>
+        </div>
+
+        <!-- Profil -->
+        <div class="pcl_tire">
+            <div class="pcl">
+                <h3>Profil</h3>
+                <p><span class="petititre">Adresse</span>: <span class="donnee">{{ cv.contact.adresse }}</span></p>
+                <p><span class="petititre">Email</span>: <span class="donnee">{{ cv.contact.email }}</span></p>
+                <p><span class="petititre">Téléphone</span>: <span class="donnee">{{ cv.contact.telephone }}</span></p>
+                <p><span class="petititre">Date de naissance</span>: <span class="donnee">{{ cv.personne.date_naissance }}</span></p>
+            </div>
+            <!-- Compétences -->
+            <div class="icon-compet">
+                <h3><img class="icone_competence" src="{% static 'images/competency.png' %}" alt="Compétence"> Compétences</h3>
+            </div>
+            {% for competence in competences %}
+                <p><span class="petititre">Compétence:</span> {{ competence.nom }} | <span class="petititre">Niveau:</span> {{ competence.niveau }}</p>
+            {% endfor %}
+        </div>
+
+        <!-- Ligne de séparation -->
+        <div class="tire_vertical"></div>
+
+        <!-- Expériences et Formations -->
+        <div class="ex-for">
+            <!-- Expériences professionnelles -->
+            <div class="ex">
+                <div class="ic_exp">
+                    <img class="icone_experience" src="{% static 'images/experience.png' %}" alt="Experience">
+                    <h2>Expérience Professionnelle</h2>
+                </div>
+                {% for experience in experiences %}
+                    <p><span class="petititre">Expérience:</span> {{ experience.titre }}</p>
+                    <p><span class="petititre">Compagnie:</span> {{ experience.entreprise }}</p>
+                    <p><span class="petititre">Description:</span> <span class="description">{{ experience.description }}</span></p>
+                    <p><span class="petititre">Début:</span> {{ experience.date_debut }} | <span class="petititre">Fin:</span> {{ experience.date_fin }}</p>
+                {% endfor %}
+            </div>
+            
+            <!-- Formation -->
+            <div class="for">
+                <h2><img class="icone_formation" src="{% static 'images/learning.png' %}" alt="Formation"> Formation</h2>
+                {% for formation in formations %}
+                    <p><span class="petititre">Diplôme:</span> {{ formation.diplome }}</p>
+                    <p><span class="petititre">Établissement:</span> {{ formation.institution }}</p>
+                    <p><span class="petititre">Début:</span> {{ formation.date_debut }} | <span class="petititre">Fin:</span> {{ formation.date_fin }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

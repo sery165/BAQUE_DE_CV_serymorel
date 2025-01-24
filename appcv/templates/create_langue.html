@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter une langue{% endblock %}
+
+{% block content %}
+<h1>Ajouter une langue</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <!-- Langue -->
+    <div class="form-group">
+        <label for="langue">Langue :</label>
+        <input type="text" class="form-control" name="langue" id="langue" required>
+    </div>
+
+    <!-- Niveau -->
+    <div class="form-group">
+        <label for="niveau">Niveau :</label>
+        <input type="text" class="form-control" name="niveau" id="niveau" required>
+    </div>
+
+    <!-- Bouton de soumission -->
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </div>
+
+    <!-- Bouton pour voir les langues déjà ajoutées -->
+    <a href="{% url 'view_langues' %}" class="btn btn-secondary mt-3">
+        Voir mes langues
+    </a>
+</form>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}CV de {{ cv.personne.nom }}{% endblock %}
+
+{% block content %}
+    <div class="cv-header">
+        <h1>{{ cv.personne.nom }} {{ cv.personne.prenom }}</h1>
+        <p>{{ cv.contact.email }} | {{ cv.contact.telephone }}</p>
+        {% if cv.personne.photo %}
+            <img src="{{ photo_url }}" alt="{{ cv.personne.nom }} Photo">
+        {% else %}
+            <img src="https://via.placeholder.com/100" alt="Photo par défaut">
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <div class="section-title">Expériences</div>
+        <div class="section-content">
+            <ul>
+                {% for experience in experiences %}
+                    <li><strong>{{ experience.titre }}</strong> - {{ experience.entreprise }} ({{ experience.date_debut }} - {{ experience.date_fin }})</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Formations</div>
+        <div class="section-content">
+            <ul>
+                {% for formation in formations %}
+                    <li><strong>{{ formation.diplome }}</strong> - {{ formation.institution }} ({{ formation.date_debut }} - {{ formation.date_fin }})</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Compétences</div>
+        <div class="section-content">
+            <ul>
+                {% for competence in competences %}
+                    <li>{{ competence.nom }} - Niveau: {{ competence.niveau }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Langues</div>
+        <div class="section-content">
+            <ul>
+                {% for langue in langues %}
+                    <li>{{ langue.langue }} - Niveau: {{ langue.niveau }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Loisirs</div>
+        <div class="section-content">
+            <ul>
+                {% for loisir in loisirs %}
+                    <li>{{ loisir.nom }} - {{ loisir.description }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

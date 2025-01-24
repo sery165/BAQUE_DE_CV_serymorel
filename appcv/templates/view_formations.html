@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Mes Formations{% endblock %}
+
+{% block content %}
+    <h1>Mes Formations</h1>
+
+    {% if formations %}
+        <ul>
+            {% for formation in formations %}
+                <li>
+                    <strong>{{ formation.nom }}</strong><br>
+                    <em>{{ formation.date_debut }} - {{ formation.date_fin }}</em><br>
+                    <p>{{ formation.description }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Vous n'avez pas encore ajouté de formations.</p>
+    {% endif %}
+
+    <a href="{% url 'create_or_edit_formation' %}">
+        <button type="button">Ajouter une formation</button>
+    </a>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Mes Loisirs{% endblock %}
+
+{% block content %}
+    <h1>Mes Loisirs</h1>
+
+    {% if loisirs %}
+        <ul>
+            {% for loisir in loisirs %}
+                <li>
+                    <p>{{ loisir.nom }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Vous n'avez pas encore ajouté de loisirs.</p>
+    {% endif %}
+
+    <a href="{% url 'create_or_edit_loisir' %}">
+        <button type="button">Ajouter un loisir</button>
+    </a>
+{% endblock %}

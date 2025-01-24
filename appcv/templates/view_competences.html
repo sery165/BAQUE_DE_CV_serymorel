@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Mes Compétences{% endblock %}
+
+{% block content %}
+    <h1>Mes Compétences</h1>
+
+    {% if competences %}
+        <ul>
+            {% for competence in competences %}
+                <li>
+                    <strong>{{ competence.nom }}</strong><br>
+                    <p>{{ competence.niveau }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Vous n'avez pas encore ajouté de compétences.</p>
+    {% endif %}
+
+    <a href="{% url 'create_or_edit_competence' %}">
+        <button type="button">Ajouter une compétence</button>
+    </a>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter une expérience{% endblock %}
+
+{% block content %}
+<h1>Ajouter une expérience</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    
+    <!-- Titre -->
+    <div class="form-group">
+        <label for="titre">Titre :</label>
+        <input type="text" class="form-control" name="titre" id="titre" required>
+    </div>
+
+    <!-- Entreprise -->
+    <div class="form-group">
+        <label for="entreprise">Entreprise :</label>
+        <input type="text" class="form-control" name="entreprise" id="entreprise" required>
+    </div>
+
+    <!-- Date de début -->
+    <div class="form-group">
+        <label for="date_debut">Date de début :</label>
+        <input type="date" class="form-control" name="date_debut" id="date_debut" required>
+    </div>
+
+    <!-- Date de fin -->
+    <div class="form-group">
+        <label for="date_fin">Date de fin :</label>
+        <input type="date" class="form-control" name="date_fin" id="date_fin">
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+        <label for="description">Description :</label>
+        <textarea class="form-control" name="description" id="description" required></textarea>
+    </div>
+
+    <!-- Bouton pour soumettre -->
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </div>
+
+    <!-- Bouton pour voir les expériences enregistrées -->
+    <a href="{% url 'view_experiences' %}" class="btn btn-secondary mt-3">
+        Voir mes expériences
+    </a>
+</form>
+{% endblock %}
