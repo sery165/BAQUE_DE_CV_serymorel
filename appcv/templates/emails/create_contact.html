@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer un contact</title>
+</head>
+<body>
+    <h1>Créer un contact</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Créer</button>
+    </form>
+
+    <!-- Ajouter un bouton qui redirige vers la page de création de contact -->
+    <br><br>
+    <a href="{% url 'create_contact' %}" class="btn btn-primary">Ajouter un contact</a>
+</body>
+</html>

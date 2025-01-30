@@ -13,11 +13,20 @@ urlpatterns = [
     path('create_loisir/', views.create_or_edit_loisir, name='create_loisir'),
     path('create_cv/', views.create_or_edit_cv, name='create_cv'),
     path('create_contact/', views.create_contact, name='create_contact'),
+<<<<<<< HEAD
     path('view_cv/<int:cv_id>/', views.view_cv, name='view_cv'),
     path('cv/<int:cv_id>/send_email/', views.send_cv_email, name='send_cv_email'),
     # Ajoutez une route par défaut pour la page de formulaire d'authentification
     path('connexion', views.formulaire, name='formulaire'), 
     
+=======
+    path('view_cv/<int:cv_id>/', views.view_cv, name='view_cv'), # Télécharger le CV en PDF
+    path('cv/<int:cv_id>/', views.view_cv, name='view_cv'),
+    path('download_cv/<int:id>/', views.download_cv, name='download_cv'),
+    # Ajoutez une route par défaut pour la page de formulaire d'authentification
+    path('connexion', views.formulaire, name='formulaire'),
+    path('cv/<int:cv_id>/send_email/', views.send_cv_email, name='send_cv_email'),
+>>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3
     # Réécrivez les routes pour créer ou éditer les autres tables
     path('create_or_edit_personne/', views.create_or_edit_personne, name='create_or_edit_personne'),
     path('boite/', views.boite, name='home'),
@@ -29,6 +38,7 @@ urlpatterns = [
     path('create_or_edit_cv/', views.create_or_edit_cv, name='create_or_edit_cv'), 
     path('register/', views.register, name='register'),
     path('create_contact/', views.create_contact, name='create_contact'),
+    path('cv/<int:cv_id>/send_email/', views.send_cv_email, name='send_cv_email'),
 
 
 
@@ -54,6 +64,12 @@ urlpatterns = [
 # pour rediriger vers la vue qui permet de surprimer
     path('cv/<int:cv_id>/delete/', views.delete_cv, name='delete_cv'),
 #liens pour envoyer par mail
+<<<<<<< HEAD
      path("cv/<int:cv_id>/send_email/", views.send_cv_email, name="send_cv_email"),
      path('view_contact/<int:contact_id>/', views.view_contact, name='view_contact'),
+=======
+    path("cv/<int:cv_id>/send_email/", views.send_cv_email, name="send_cv_email"),
+    path('view_contact/<int:contact_id>/', views.view_contact, name='view_contact'),  
+    path('cv/<int:id>/', views.cv_detail, name='cv_detail'), 
+>>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3
 ]

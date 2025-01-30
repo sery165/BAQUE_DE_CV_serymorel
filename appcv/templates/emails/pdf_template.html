@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Trombinoscope CV</title>
+</head>
+<body>
+    <h1>Trombinoscope</h1>
+    <ul>
+        {% for cv in cvs %}
+            <li>
+                {{ cv.personne.prenom }} {{ cv.personne.nom }} - {{ cv.premier_cv.titre }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

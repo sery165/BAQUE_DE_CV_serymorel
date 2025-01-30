@@ -19,10 +19,13 @@ class Personne(models.Model):
     prenom = models.CharField(max_length=100)  # Correction de 'maxlength' en 'max_length'
     date_naissance = models.DateField()
     photo = models.ImageField(upload_to='photos/', null=True, blank=True)
+<<<<<<< HEAD
     email = models.EmailField()
     telephone = models.CharField(max_length=20, null=True, blank=True)  # Correction de 'maxlength' en 'max_length'
     adresse = models.TextField(null=True, blank=True)
     cv = models.FileField(upload_to='cv/', null=True, blank=True)  # Ajout du champ pour le CV
+=======
+>>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3
 
     def __str__(self):
         return f"{self.prenom} {self.nom}"
@@ -75,6 +78,18 @@ class Langue(models.Model):
     def __str__(self):
         return f"{self.langue} - {self.niveau}"
 
+<<<<<<< HEAD
+=======
+class Contact(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    email = models.EmailField()
+    telephone = models.CharField(max_length=20, null=True, blank=True)
+    adresse = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.email
+
+>>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3
 class Loisir(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     nom = models.CharField(maxlength=100)
@@ -98,6 +113,7 @@ class CV(models.Model):
     formations = models.ManyToManyField(Formation, blank=True)
     competences = models.ManyToManyField(Competence, blank=True)
     langues = models.ManyToManyField(Langue, blank=True)
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)  # Modifié de OneToOneField à ForeignKey
     loisirs = models.ManyToManyField(Loisir, blank=True)
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE, null=True, blank=True)
 

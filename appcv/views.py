@@ -13,6 +13,7 @@ from .forms import*
 from .models import *
 from django.contrib.auth.models import User
 
+<<<<<<< HEAD
 def trombinoscope(request):
     personnes = Personne.objects.all()  # Récupère toutes les personnes
     data = []
@@ -27,6 +28,29 @@ def trombinoscope(request):
     context = {'data': data}  # Définissez le context ici
     
     return render(request, 'emails/trombinoscope.html', context)  # Transmettez-le dans le render
+=======
+from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404
+from django.conf import settings
+from appcv.models import CV
+from django.http import HttpResponse
+>>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3
+
+def cv_detail(request, pk):
+    cv = get_object_or_404(CV, pk=pk)
+    return render(request, 'cv_detail.html', {'cv': cv})
+
+def trombinoscope(request):
+    personnes = Personne.objects.all()  # Récupère toutes les personnes
+    data = []
+    for personne in personnes:
+        # Récupère le premier CV de la personne si disponible
+        premier_cv = CV.objects.filter(personne=personne).first()
+        data.append({
+            'personne': personne,
+            'premier_cv': premier_cv,
+        })
+    return render(request, 'trombinoscope.html', {'data': data})
 
 def cv_detail(request, pk):
     cv = get_object_or_404(CV, pk=pk)
@@ -171,6 +195,10 @@ def create_contact(request):
         form = ContactForm(instance=contact)
 
     return render(request, "emails/create_contact.html", {"form": form})
+<<<<<<< HEAD
+=======
+
+>>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3
 
 
 # Vue pour créer ou modifier les compétences de l'utilisateur
@@ -253,7 +281,7 @@ def view_cv(request, cv_id, *args, **kwargs):
     else:
         template_name = 'cv_design4.html'
 
-    return render(request, template_name, {
+    return render(request, 'view_cv.html', {
         "cv": cv,
         "personne": personne,
         "contact": contact,
@@ -512,15 +540,91 @@ def send_cv_email(request, cv_id):
 def view_contact(request, contact_id):
     contact = get_object_or_404(Contact, id=contact_id)
     return render(request, 'contact_detail.html', {'contact': contact})
+<<<<<<< HEAD
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from .models import CV
 from reportlab.pdfgen import canvas
+=======
+
+
+from django.shortcuts import render, redirect
+from .forms import ExperienceForm
+
+def add_experience(request):
+    if request.method == 'POST':
+        form = ExperienceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('view_experiences')  # Redirige vers la page de vue des expériences
+    else:
+        form = ExperienceForm()
+
+    return render(request, 'add_experience.html', {'form': form})
+
+from .forms import FormationForm
+
+def add_formation(request):
+    if request.method == 'POST':
+        form = FormationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('view_formations')
+    else:
+        form = FormationForm()
+
+    return render(request, 'add_formation.html', {'form': form})
+
+from django.shortcuts import render, redirect
+from .forms import ExperienceForm, FormationForm, CompetenceForm, LangueForm
+from .models import Experience, Formation, Competence, Langue
+
+def create_cv(request):
+    # Crée les instances de formulaire pour chaque type de données
+    if request.method == 'POST':
+        experience_form = ExperienceForm(request.POST)
+        formation_form = FormationForm(request.POST)
+        competence_form = CompetenceForm(request.POST)
+        langue_form = LangueForm(request.POST)
+        
+        # Si tous les formulaires sont valides, enregistre les données
+        if experience_form.is_valid():
+            experience_form.save()
+        if formation_form.is_valid():
+            formation_form.save()
+        if competence_form.is_valid():
+            competence_form.save()
+        if langue_form.is_valid():
+            langue_form.save()
+
+        # Redirige vers la page de création du CV après l'enregistrement
+        return redirect('create_cv')
+    
+    else:
+        # Si la requête n'est pas POST, initialise les formulaires vides
+        experience_form = ExperienceForm()
+        formation_form = FormationForm()
+        competence_form = CompetenceForm()
+        langue_form = LangueForm()
+
+    return render(request, 'create_cv.html', {
+        'experience_form': experience_form,
+        'formation_form': formation_form,
+        'competence_form': competence_form,
+        'langue_form': langue_form
+    })
+
+
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+from .models import CV
+>>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3
 
 def download_cv(request, id):
     cv = get_object_or_404(CV, id=id)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="CV_{cv.personne.prenom}_{cv.personne.nom}.pdf"'
+<<<<<<< HEAD
 
     p = canvas.Canvas(response)
     p.drawString(100, 800, f"CV de {cv.personne.prenom} {cv.personne.nom}")
@@ -560,3 +664,89 @@ def ajouter_personne(request):
         form = PersonneForm()
 
     return render(request, 'ajouter_personne.html', {'form': form})
+=======
+    # Logique pour générer le contenu PDF ici
+    return response
+
+from django.shortcuts import render
+from .models import CV
+
+def view_cvs(request):
+    cvs = CV.objects.all()  # Récupère tous les CVs
+    return render(request, 'view_cvs.html', {'cvs': cvs})
+from django.shortcuts import render, get_object_or_404
+from .models import CV
+
+def view_cv(request, cv_id):
+    cv = get_object_or_404(CV, id=cv_id)
+    return render(request, 'emails/view_cv.html', {'cv': cv})
+
+from django.http import HttpResponse
+from reportlab.pdfgen import canvas
+
+def generate_pdf():
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="test.pdf"'
+    p = canvas.Canvas(response)
+    p.drawString(100, 100, "Hello, this is a test PDF!")
+    p.showPage()
+    p.save()
+    return response
+
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from .models import CV
+
+def send_cv_email(request, cv_id):
+    # Récupération du CV et de la personne associée
+    cv = get_object_or_404(CV, id=cv_id)
+    personne = cv.personne
+
+    loisirs = cv.loisirs.all() 
+    experiences = cv.experiences.all() 
+    langues = cv.langues.all() 
+    formations= cv.formations.all()
+    competences= cv.competences.all()
+
+    #photo_url = request.build_absolute_uri(personne.photo.url)
+    photo_url = "https://www.univ-na.ci/storage/settings/March2021/q7ebFVlLpG3BnHZWV47N.png"
+
+    if request.method == 'POST':
+        recipient_email = request.POST.get('email')
+
+        if not recipient_email:
+            messages.error(request, "Veuillez fournir une adresse e-mail valide.")
+            return render(request, 'email_cv.html', {'cv': cv})
+
+        # Préparation de l'email
+        subject = f"CV de {personne.nom} {personne.prenom}"
+        message = render_to_string('cv_email_template.html', context={
+            'cv': cv,  
+            'loisirs': loisirs,  
+            'experiences': experiences,
+            'langues': langues,
+            'competences': competences,
+            'formations': formations,
+            'photo_url': photo_url   
+        })
+
+        email = EmailMessage(
+            subject=subject,
+            body=message,
+            from_email='animanalfred@gmail.com',
+            to=[recipient_email],
+        )
+        email.content_subtype = 'html'  # Spécifie que le contenu est en HTML
+
+        try:
+            email.send()  # Envoi de l'email
+            messages.success(request, "Le CV a été envoyé avec succès.")
+        except Exception as e:
+            messages.error(request, f"Une erreur s'est produite lors de l'envoi de l'email : {e}")
+
+        return redirect('view_cvs')
+
+    return render(request, 'emails/send_email.html', {'cv': cv})
+>>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3
