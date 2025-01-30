@@ -96,3 +96,37 @@ class CVForm(forms.ModelForm):
             self.fields['competences'].queryset = Competence.objects.filter(user=user)
             self.fields['langues'].queryset = Langue.objects.filter(user=user)
             self.fields['loisirs'].queryset = Loisir.objects.filter(user=user)
+            
+            
+            
+            
+            
+            # Formulaire personnalisé pour l'inscription utilisateur
+class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(
+        required=True,
+        label="Adresse e-mail",
+        help_text="Veuillez entrer une adresse e-mail valide.",
+    )
+    password1 = forms.CharField(
+        label="Mot de passe",
+        widget=forms.PasswordInput,
+        help_text="Votre mot de passe doit contenir au moins 4 caractères.",
+    )
+    password2 = forms.CharField(
+        label="Confirmation du mot de passe",
+        widget=forms.PasswordInput,
+        help_text="Veuillez confirmer votre mot de passe.",
+    )
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')
+
+    def clean_password1(self):
+        password1 = self.cleaned_data.get('password1')
+        if len(password1) < 4:
+            raise forms.ValidationError("Le mot de passe doit contenir au moins 4 caractères.")
+        return password1
+
+

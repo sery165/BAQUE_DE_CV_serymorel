@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV de {{ cv.personne.nom }} {{ cv.personne.prenom }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #007bff;
+            margin-top: 30px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 5px 0;
+        }
+        .img-fluid {
+            margin-top: 10px;
+        }
+        .btn {
+            margin-top: 15px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>CV de {{ cv.personne.nom }} {{ cv.personne.prenom }}</h1>
+        
+        <h2>Informations personnelles</h2>
+        <ul>
+            {% if cv.personne.photo %}
+                <li><strong>Photo :</strong> <img src="{{ cv.personne.photo.url }}" alt="Photo de {{ cv.personne.prenom }}" class="img-fluid" style="max-width: 150px;"></li>
+            {% endif %}
+            <li><strong>Nom :</strong> {{ cv.personne.nom }} {{ cv.personne.prenom }}</li>
+            <li><strong>Date de naissance :</strong> {{ cv.personne.date_naissance }}</li>
+            <li><strong>Email :</strong> {{ cv.contact.email }}</li>
+            <li><strong>Téléphone :</strong> {{ cv.contact.telephone }}</li>
+            <li><strong>Adresse :</strong> {{ cv.contact.adresse }}</li>
+        </ul>
+
+        <h2>Compétences</h2>
+        <ul>
+            {% for competence in cv.competences.all %}
+                <li>{{ competence.nom }} ({{ competence.niveau }})</li>
+            {% empty %}
+                <li>Aucune compétence ajoutée.</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Expériences professionnelles</h2>
+        <ul>
+            {% for experience in cv.experiences.all %}
+                <li>{{ experience.titre }} chez {{ experience.entreprise }} ({{ experience.date_debut }} - {{ experience.date_fin }})</li>
+            {% empty %}
+                <li>Aucune expérience ajoutée.</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Formations</h2>
+        <ul>
+            {% for formation in cv.formations.all %}
+                <li>{{ formation.diplome }} à {{ formation.institution }} ({{ formation.date_debut }} - {{ formation.date_fin }})</li>
+            {% empty %}
+                <li>Aucune formation ajoutée.</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Langues</h2>
+        <ul>
+            {% for langue in cv.langues.all %}
+                <li>{{ langue.langue }} ({{ langue.niveau }})</li>
+            {% empty %}
+                <li>Aucune langue ajoutée.</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Loisirs</h2>
+        <ul>
+            {% for loisir in cv.loisirs.all %}
+                <li>{{ loisir.nom }}: {{ loisir.description }}</li>
+            {% empty %}
+                <li>Aucun loisir ajouté.</li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'download_cv' cv.id %}" class="btn btn-primary mt-3">Télécharger le CV en PDF</a>
+        <a href="{% url 'send_cv_email' cv.id %}" class="btn btn-success mt-3">Envoyer par email</a>
+        <br><br>
+        <a href="{% url 'view_cvs' %}" class="btn btn-secondary">Retour à la liste des CVs</a>
+    </div>
+</body>
+</html>

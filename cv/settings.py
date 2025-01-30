@@ -39,8 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'appcv',
-    'widget_tweaks',
-
 ]
 
 MIDDLEWARE = [
@@ -85,18 +83,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    
 ]
 
 # Internationalization
@@ -131,10 +118,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'photos')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+# Configuration de l'email backend
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Adresse SMTP du serveur
+EMAIL_HOST = 'smtp.gmail.com'  # Adresse SMTP de Gmail
 EMAIL_PORT = 587  # Port pour les connexions TLS
-EMAIL_USE_TLS = True  # Activez TLS pour sécuriser la connexion
-EMAIL_HOST_USER = 'animanalfred@gmail.com'  # Adresse e-mail de l'expéditeur
-EMAIL_HOST_PASSWORD = 'pkkgkywefbepzmdl'  # Mot de passe de votre adresse e-mail ou App Password
+EMAIL_USE_TLS = True  # Activer TLS pour sécuriser la connexion
+EMAIL_HOST_USER = 'serymorel16@gmail.com'  # Ton adresse Gmail
+EMAIL_HOST_PASSWORD = 'zkal fidp snkd plti'  # Ton mot de passe ou mot de passe d'application

@@ -7,22 +7,22 @@
 
 <form method="POST">
     {% csrf_token %}
-
+    
     <!-- Nom du loisir -->
     <div class="form-group">
         <label for="nom">Nom du loisir :</label>
-        <input type="text" class="form-control" name="nom" id="nom" required>
+        {{ form.nom }}  <!-- Utilisation du champ dynamique du formulaire -->
     </div>
 
     <!-- Description du loisir -->
     <div class="form-group">
         <label for="description">Description :</label>
-        <textarea class="form-control" name="description" id="description" required></textarea>
+        {{ form.description }}  <!-- Utilisation du champ dynamique du formulaire -->
     </div>
 
     <!-- Bouton de soumission -->
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Ajouter</button>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
     </div>
 
     <!-- Bouton pour voir les loisirs déjà ajoutés -->

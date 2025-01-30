@@ -1,25 +1,19 @@
 {% extends 'base.html' %}
 
-{% block title %}Mes CVs{% endblock %}
-
 {% block content %}
     <h1>Mes CVs</h1>
-
-    <!-- Afficher tous les CVs de l'utilisateur sur la page -->
-    {% if cvs %}
-        <ul>
-            {% for cv in cvs %}
+    <ul>
+        {% for cv in cvs %}
             <li>
                 <strong>Nom :</strong> {{ cv.personne.prenom }} {{ cv.personne.nom }}<br>
                 <strong>Date de naissance :</strong> {{ cv.personne.date_naissance }}<br>
                 <strong>Email :</strong> {{ cv.contact.email }}<br>
                 <strong>Téléphone :</strong> {{ cv.contact.telephone }}<br>
                 <strong>Adresse :</strong> {{ cv.contact.adresse }}<br>
-                <strong>CV :</strong> <a href="{% url 'view_cv' cv.id %}">Voir le CV</a>
+                <strong>CV :</strong> <a href="{% url 'view_cv' cv.id %}">Voir le CV</a><br>
+                <strong>Télécharger le CV :</strong> <a href="{% url 'download_cv' cv.id %}">Télécharger</a><br>
+                <strong>Envoyer par email :</strong> <a href="{% url 'send_cv_email' cv.id %}">Envoyer</a>
             </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Aucun CV disponible.</p>
-    {% endif %}
+        {% endfor %}
+    </ul>
 {% endblock %}

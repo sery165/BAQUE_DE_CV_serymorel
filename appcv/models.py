@@ -7,9 +7,7 @@ class Personne(models.Model):
     prenom = models.CharField(max_length=100)
     date_naissance = models.DateField()
     photo = models.ImageField(upload_to='photos/', null=True, blank=True)
-    email = models.EmailField()
-    telephone = models.CharField(max_length=20, null=True, blank=True)
-    adresse = models.TextField(null=True, blank=True)
+
     def __str__(self):
         return f"{self.prenom} {self.nom}"
 
@@ -61,6 +59,14 @@ class Langue(models.Model):
     def __str__(self):
         return f"{self.langue} - {self.niveau}"
 
+class Contact(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    email = models.EmailField()
+    telephone = models.CharField(max_length=20, null=True, blank=True)
+    adresse = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.email
 
 class Loisir(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -85,6 +91,7 @@ class CV(models.Model):
     formations = models.ManyToManyField(Formation, blank=True)
     competences = models.ManyToManyField(Competence, blank=True)
     langues = models.ManyToManyField(Langue, blank=True)
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)  # Modifié de OneToOneField à ForeignKey
     loisirs = models.ManyToManyField(Loisir, blank=True)
 
     def __str__(self):
