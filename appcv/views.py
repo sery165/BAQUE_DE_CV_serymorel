@@ -13,12 +13,32 @@ from .forms import*
 from .models import *
 from django.contrib.auth.models import User
 
+<<<<<<< HEAD
+def trombinoscope(request):
+    personnes = Personne.objects.all()  # Récupère toutes les personnes
+    data = []
+    for personne in personnes:
+        # Récupère le premier CV de la personne si disponible
+        premier_cv = CV.objects.filter(personne=personne).first()
+        data.append({
+            'personne': personne,
+            'premier_cv': premier_cv,
+        })
+    
+    context = {'data': data}  # Définissez le context ici
+    
+    return render(request, 'emails/trombinoscope.html', context)  # Transmettez-le dans le render
+=======
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 from appcv.models import CV
 from django.http import HttpResponse
+>>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3
 
+def cv_detail(request, pk):
+    cv = get_object_or_404(CV, pk=pk)
+    return render(request, 'cv_detail.html', {'cv': cv})
 
 def trombinoscope(request):
     personnes = Personne.objects.all()  # Récupère toutes les personnes
@@ -175,7 +195,10 @@ def create_contact(request):
         form = ContactForm(instance=contact)
 
     return render(request, "emails/create_contact.html", {"form": form})
+<<<<<<< HEAD
+=======
 
+>>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3
 
 
 # Vue pour créer ou modifier les compétences de l'utilisateur
@@ -517,6 +540,12 @@ def send_cv_email(request, cv_id):
 def view_contact(request, contact_id):
     contact = get_object_or_404(Contact, id=contact_id)
     return render(request, 'contact_detail.html', {'contact': contact})
+<<<<<<< HEAD
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+from .models import CV
+from reportlab.pdfgen import canvas
+=======
 
 
 from django.shortcuts import render, redirect
@@ -589,11 +618,53 @@ def create_cv(request):
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from .models import CV
+>>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3
 
 def download_cv(request, id):
     cv = get_object_or_404(CV, id=id)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="CV_{cv.personne.prenom}_{cv.personne.nom}.pdf"'
+<<<<<<< HEAD
+
+    p = canvas.Canvas(response)
+    p.drawString(100, 800, f"CV de {cv.personne.prenom} {cv.personne.nom}")
+    p.drawString(100, 780, f"Date de naissance : {cv.personne.date_naissance}")
+    p.drawString(100, 760, f"Email : {cv.contact.email}")
+    p.drawString(100, 740, f"Téléphone : {cv.contact.telephone}")
+    p.drawString(100, 720, f"Adresse : {cv.contact.adresse}")
+    p.showPage()
+    p.save()
+
+    return response
+
+from django.shortcuts import render, redirect
+from .forms import PersonneForm
+from .models import Personne
+
+def create_personne(request):
+    if request.method == 'POST':
+        form = PersonneForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()  # Utilise la méthode `save` pour créer une nouvelle personne
+            return redirect('success_page')  # Redirige vers une page de succès
+    else:
+        form = PersonneForm()
+    return render(request, 'create_personne.html', {'form': form})
+
+from django.shortcuts import render, redirect
+from .forms import PersonneForm
+
+def ajouter_personne(request):
+    if request.method == 'POST':
+        form = PersonneForm(request.POST, request.FILES)  # Assure-toi d'inclure request.FILES pour gérer le fichier
+        if form.is_valid():
+            form.save()
+            return redirect('trombinoscope')
+    else:
+        form = PersonneForm()
+
+    return render(request, 'ajouter_personne.html', {'form': form})
+=======
     # Logique pour générer le contenu PDF ici
     return response
 
@@ -678,3 +749,4 @@ def send_cv_email(request, cv_id):
         return redirect('view_cvs')
 
     return render(request, 'emails/send_email.html', {'cv': cv})
+>>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3

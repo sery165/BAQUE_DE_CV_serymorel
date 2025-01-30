@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trombinoscope</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'personnes/css/style.css' %}">
     <style>
         /* Global Styles */
         body {
@@ -60,9 +61,10 @@
             background: #16213e;
         }
 
+        /* Trombinoscope layout with 3 items per row */
         .trombinoscope-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(3, 1fr); /* 3 columns */
             gap: 20px;
         }
 
@@ -119,6 +121,27 @@
 </head>
 
 <body>
+    <!-- Navbar avec Trombinoscope -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'trombinoscope' %}">Mon Application CV</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'formulaire' %}">Créer un CV</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">S'inscrire</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'trombinoscope' %}">Trombinoscope</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <!-- Hero Section -->
     <header class="hero">
         <h1>Bienvenue sur le Trombinoscope</h1>
@@ -135,18 +158,18 @@
         <div class="trombinoscope-container">
             {% for item in data %}
             <div class="person-card">
-                {% if item.personne.photo and item.personne.photo.url %}
-                <a href="{% if item.premier_cv %}{% url 'cv_detail' item.premier_cv.id %}{% else %}#{% endif %}">
-                    <img src="{{ item.personne.photo.url }}" alt="Photo de {{ item.personne.prenom }} {{ item.personne.nom }}">
-                </a>
+                {% if item.personne.photo %}
+                    <a href="{% if item.premier_cv %}{% url 'cv_detail' item.premier_cv.id %}{% else %}#{% endif %}">
+                        <img src="{{ item.personne.photo.url }}" alt="Photo de {{ item.personne.prenom }} {{ item.personne.nom }}">
+                    </a>
                 {% else %}
-                <img src="/static/images/default_profile.png" alt="Aucune photo disponible" />
+                    <img src="/static/images/default_profile.png" alt="Aucune photo disponible" />
                 {% endif %}
                 <h3>{{ item.personne.prenom }} {{ item.personne.nom }}</h3>
-                {% if item.premier_cv %}
-                <a href="{% url 'cv_detail' item.premier_cv.id %}">Voir le CV</a>
+                {% if item.personne.cv %}
+                    <a href="{{ item.personne.cv.url }}" target="_blank">Télécharger le CV</a> <!-- Lien vers le CV -->
                 {% else %}
-                <p>Aucun CV disponible</p>
+                    <p>Aucun CV disponible</p>
                 {% endif %}
             </div>
             {% endfor %}
@@ -182,6 +205,11 @@
     <footer>
         <p>&copy; 2025 Trombinoscope | <a href="mailto:support@trombinoscope.com">Contactez-nous</a></p>
     </footer>
+
+    <!-- Bootstrap JS & dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0-alpha1/js/bootstrap.min.js"></script>
 </body>
 
 </html>

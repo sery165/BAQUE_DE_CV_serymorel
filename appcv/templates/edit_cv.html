@@ -35,7 +35,11 @@
                 </option>
             {% endfor %}
         </select>
-        <a href="{% url 'create_contact' %}"><button type="button" class="btn" style="background-color: #007bff; color: white;">Ajouter ou modifier mes informations de contact</button></a>
+        
+        <!-- Nouveau bouton pour ajouter un contact -->
+        <a href="{% url 'create_contact' %}">
+            <button type="button" class="btn" style="background-color: #007bff; color: white;">Ajouter un Contact</button>
+        </a>
         <br><br>
 
         <!-- Choix du design -->
@@ -111,4 +115,9 @@
         <button type="submit" class="btn" style="background-color: #28a745; color: white;">Enregistrer les modifications</button>
         <a href="{% url 'view_cvs' %}"><button class="btn" style="background-color: #dc3545; color: white;" type="button">Annuler</button></a>
     </form>
+
+    <!-- Bouton pour envoyer le CV modifié par WhatsApp -->
+    <a href="https://api.whatsapp.com/send?text=Voici%20mon%20CV%20modifié%20:{{ request.build_absolute_uri 'view_cv' cv.id }}" target="_blank">
+        <button type="button" class="btn" style="background-color: #25d366; color: white;">Envoyer par WhatsApp</button>
+    </a>
 {% endblock %}

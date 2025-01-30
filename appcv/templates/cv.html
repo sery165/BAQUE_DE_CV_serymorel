@@ -91,7 +91,14 @@
             {% endfor %}
         </table>
 
-        <button class="btn-download">Télécharger CV</button>
+        <button class="btn-download">
+            <a href="{{ url_of_cv_pdf }}" style="color: white; text-decoration: none;">Télécharger CV</a>
+        </button>
     </div>
+
+    <!-- Bouton pour envoyer le CV par WhatsApp -->
+    <a href="https://api.whatsapp.com/send?text=Mon%20CV%20est%20disponible%20ici:%20{{ url_of_cv_pdf }}" target="_blank">
+        <button type="button" class="btn" style="background-color: #25d366; color: white;">Envoyer par WhatsApp</button>
+    </a>
 
 </body>

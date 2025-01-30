@@ -106,3 +106,19 @@ class Migration(migrations.Migration):
             ],
         ),
     ]
+
+from django.db import migrations, models
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('appcv', '000X_previous_migration'),  # Remplace '000X_previous_migration' par la dernière migration effectuée
+    ]
+
+    operations = [
+        migrations.AddField(
+            model_name='personne',
+            name='email',
+            field=models.EmailField(max_length=254, null=True, blank=True),
+        ),
+    ]

@@ -10,9 +10,23 @@
                 <strong>Email :</strong> {{ cv.contact.email }}<br>
                 <strong>Téléphone :</strong> {{ cv.contact.telephone }}<br>
                 <strong>Adresse :</strong> {{ cv.contact.adresse }}<br>
+<<<<<<< HEAD
+                <strong>CV :</strong> <a href="{% url 'view_cv' cv.id %}">Voir le CV</a>
+
+                <!-- Bouton pour envoyer le CV par WhatsApp -->
+                <a href="https://api.whatsapp.com/send?text=Voici%20mon%20CV%20modifié%20:%20{{ request.build_absolute_uri('/view_cv/'|add:cv.id|string) }}" target="_blank">
+                    <button type="button" class="btn" style="background-color: #25d366; color: white;">Envoyer par WhatsApp</button>
+                </a>
+                
+                <!-- Bouton pour envoyer le CV par email -->
+                <a href="{% url 'send_cv_email' cv.id %}">
+                    <button type="button" class="btn" style="background-color: #007bff; color: white;">Envoyer par Email</button>
+                </a>
+=======
                 <strong>CV :</strong> <a href="{% url 'view_cv' cv.id %}">Voir le CV</a><br>
                 <strong>Télécharger le CV :</strong> <a href="{% url 'download_cv' cv.id %}">Télécharger</a><br>
                 <strong>Envoyer par email :</strong> <a href="{% url 'send_cv_email' cv.id %}">Envoyer</a>
+>>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3
             </li>
         {% endfor %}
     </ul>
