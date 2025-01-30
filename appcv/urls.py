@@ -14,9 +14,9 @@ urlpatterns = [
     path('create_cv/', views.create_or_edit_cv, name='create_cv'),
     path('create_contact/', views.create_contact, name='create_contact'),
     path('view_cv/<int:cv_id>/', views.view_cv, name='view_cv'),
-    
+    path('cv/<int:cv_id>/send_email/', views.send_cv_email, name='send_cv_email'),
     # Ajoutez une route par défaut pour la page de formulaire d'authentification
-    path('connexion', views.formulaire, name='formulaire'),
+    path('connexion', views.formulaire, name='formulaire'), 
     
     # Réécrivez les routes pour créer ou éditer les autres tables
     path('create_or_edit_personne/', views.create_or_edit_personne, name='create_or_edit_personne'),
@@ -54,5 +54,6 @@ urlpatterns = [
 # pour rediriger vers la vue qui permet de surprimer
     path('cv/<int:cv_id>/delete/', views.delete_cv, name='delete_cv'),
 #liens pour envoyer par mail
-path("cv/<int:cv_id>/send_email/", views.send_cv_email, name="send_cv_email"),
+     path("cv/<int:cv_id>/send_email/", views.send_cv_email, name="send_cv_email"),
+     path('view_contact/<int:contact_id>/', views.view_contact, name='view_contact'),
 ]

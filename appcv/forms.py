@@ -1,6 +1,6 @@
 # forms.py
 from django import forms
-from .models import Personne, Experience, Formation, Competence, Langue, Contact, Loisir, CV
+from .models import Personne, Experience, Formation, Competence, Langue, Loisir, CV
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -14,7 +14,7 @@ class CustomUserCreationForm(UserCreationForm):
 class PersonneForm(forms.ModelForm):
     class Meta:
         model = Personne
-        fields = ['nom', 'prenom', 'date_naissance', 'photo']
+        fields = ['nom', 'prenom', 'date_naissance', 'photo','cv']
 
 class ExperienceForm(forms.ModelForm):
     class Meta:
@@ -79,10 +79,11 @@ class CVForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
+    contact = forms.ModelChoiceField(queryset=Contact.objects.all(), required=False)  # Ajout du champ contact
 
     class Meta:
         model = CV
-        fields = ["personne", "contact", "experiences", "competences", "formations", "langues", "loisirs", "title", "design"]
+        fields = ['design', 'title', 'personne', 'experiences', 'formations', 'competences', 'langues', 'loisirs', 'contact']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)  # Récupérer l'utilisateur
@@ -96,3 +97,4 @@ class CVForm(forms.ModelForm):
             self.fields['competences'].queryset = Competence.objects.filter(user=user)
             self.fields['langues'].queryset = Langue.objects.filter(user=user)
             self.fields['loisirs'].queryset = Loisir.objects.filter(user=user)
+
