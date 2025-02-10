@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'appcv',
 ]
 
@@ -98,11 +99,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-STATIC_URL = 'static/'
+# settings.py
 
+# Pour les fichiers statiques
+STATIC_URL = '/static/'
+
+# Si tu n'utilises pas une structure par défaut, vérifie aussi STATICFILES_DIRS
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / "static",  # Ou un autre répertoire où tes fichiers statiques sont stockés
 ]
+
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 

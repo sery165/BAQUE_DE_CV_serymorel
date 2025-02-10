@@ -1,215 +1,117 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trombinoscope</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'personnes/css/style.css' %}">
+    
     <style>
-        /* Global Styles */
         body {
-            margin: 0;
-            font-family: 'Montserrat', Arial, sans-serif;
-            background: #1a1a2e;
-            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
         }
-
-        header.hero {
-            height: 100vh;
-            background: linear-gradient(to bottom, rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.8)),
-                url('https://source.unsplash.com/1920x1080/?teamwork,people') no-repeat center/cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: #ffffff;
-            padding: 20px;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            max-width: 600px;
-            margin-bottom: 40px;
-        }
-
-        .cta-buttons a {
-            margin: 0 10px;
-            padding: 15px 30px;
-            font-weight: 600;
-            border-radius: 30px;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: #ffffff;
-            background: #ef476f;
-            transition: 0.3s;
-        }
-
-        .cta-buttons a:hover {
-            background: #f78da7;
-        }
-
-        .trombinoscope {
-            padding: 40px 20px;
-            background: #16213e;
-        }
-
-        /* Trombinoscope layout with 3 items per row */
+    
+        /* Container du trombinoscope */
         .trombinoscope-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 columns */
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
         }
-
+    
+        /* Carte de chaque personne */
         .person-card {
-            background: #0f3460;
-            border-radius: 10px;
-            padding: 20px;
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid #3498db; /* Bordure bleue */
         }
-
-        .person-card img {
-            max-width: 100%;
-            border-radius: 50%;
-            margin-bottom: 15px;
-        }
-
+    
         .person-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3); /* Ombre bleue douce au survol */
         }
-
-        .services {
-            padding: 40px;
-            background: #16213e;
-            text-align: center;
+    
+        /* Image de la personne */
+        .person-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
         }
-
-        .services h2 {
-            font-size: 2.5rem;
-            color: #ffc947;
-            margin-bottom: 20px;
-        }
-
-        .services .card {
-            background: #0f3460;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 10px;
-        }
-
-        footer {
-            padding: 20px;
-            background: #0f3460;
-            color: #ffc947;
-            text-align: center;
-        }
-
-        footer a {
+    
+        /* Liens de la personne */
+        .person-card a {
             text-decoration: none;
-            color: inherit;
+            color: #3498db; /* Lien bleu */
+            font-weight: bold;
+        }
+    
+        .person-card a:hover {
+            color: #2980b9; /* Lien bleu plus foncé au survol */
+        }
+    
+        /* Conteneur des boutons */
+        .btn-container a {
+            margin-right: 30px; /* Grand espace entre les boutons */
+            background-color: #3498db; /* Couleur de fond bleue des boutons */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+    
+        .btn-container a:hover {
+            background-color: #2980b9; /* Couleur bleue plus foncée au survol */
+        }
+    
+        /* Titre h1 en bleu */
+        h1 {
+            text-align: center;
+            color: #3498db; /* Couleur bleue pour le titre */
+            margin: 20px 0;
         }
     </style>
+    
+        
 </head>
-
 <body>
-    <!-- Navbar avec Trombinoscope -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'trombinoscope' %}">Mon Application CV</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'formulaire' %}">Créer un CV</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">S'inscrire</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'trombinoscope' %}">Trombinoscope</a>
-                </li>
-            </ul>
+    <h1 style="text-align: center;">LE TROMBINOSCOPE </h1>
+    <div class="btn-container" style="text-align: center;">
+        <a href="{% url 'formulaire' %}" class="btn btn-primary">CONNEXION</a>
+        <a href="{% url 'register' %}" class="btn btn-primary">INSCRIPTION</a>
+    </div>
+    <div class="trombinoscope-container">
+        {% for item in data %}
+        <div class="person-card">
+            <!-- Photo de la personne -->
+            {% if item.personne.photo and item.personne.photo.url %}
+                <a href="{% if item.premier_cv %}{% url 'cv_detail' item.premier_cv.id %}{% else %}#{% endif %}">
+                    <img src="{{ item.personne.photo.url }}" alt="Photo de {{ item.personne.prenom }} {{ item.personne.nom }}">
+                </a>
+            {% else %}
+                <p>Aucune photo</p>
+            {% endif %}
+            <!-- Nom de la personne --> 
+            <p>{{ item.personne.prenom }} <br>
+                 {{ item.personne.nom }} 
+                </p>
+            <!-- Lien vers le CV -->
+            {% if item.premier_cv %}
+                <a href="{% url 'cv_detail' item.premier_cv.id %}">Voir le CV</a>
+            {% else %}
+                <p>Aucun CV disponible</p>
+            {% endif %}
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="hero">
-        <h1>Bienvenue sur le Trombinoscope</h1>
-        <p>Créez, gérez et partagez vos CV avec style. Découvrez une plateforme qui met vos talents en lumière.</p>
-        <div class="cta-buttons">
-            <a href="{% url 'formulaire' %}">Créer un CV</a>
-            <a href="{% url 'register' %}">S'inscrire</a>
-        </div>
-    </header>
-
-    <!-- Trombinoscope Section -->
-    <section class="trombinoscope">
-        <h2>Trombinoscope</h2>
-        <div class="trombinoscope-container">
-            {% for item in data %}
-            <div class="person-card">
-                {% if item.personne.photo %}
-                    <a href="{% if item.premier_cv %}{% url 'cv_detail' item.premier_cv.id %}{% else %}#{% endif %}">
-                        <img src="{{ item.personne.photo.url }}" alt="Photo de {{ item.personne.prenom }} {{ item.personne.nom }}">
-                    </a>
-                {% else %}
-                    <img src="/static/images/default_profile.png" alt="Aucune photo disponible" />
-                {% endif %}
-                <h3>{{ item.personne.prenom }} {{ item.personne.nom }}</h3>
-                {% if item.personne.cv %}
-                    <a href="{{ item.personne.cv.url }}" target="_blank">Télécharger le CV</a> <!-- Lien vers le CV -->
-                {% else %}
-                    <p>Aucun CV disponible</p>
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services">
-        <h2>Nos Fonctionnalités</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <h3>Création de CV</h3>
-                    <p>Utilisez des modèles personnalisés pour créer des CV professionnels en quelques clics.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <h3>Trombinoscope</h3>
-                    <p>Affichez et parcourez les profils grâce à un tableau visuel intuitif.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <h3>Téléchargement PDF</h3>
-                    <p>Exportez facilement vos CV en format PDF pour impression ou envoi par email.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Trombinoscope | <a href="mailto:support@trombinoscope.com">Contactez-nous</a></p>
-    </footer>
-
-    <!-- Bootstrap JS & dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0-alpha1/js/bootstrap.min.js"></script>
+        {% endfor %}
+    </div>
 </body>
-
 </html>

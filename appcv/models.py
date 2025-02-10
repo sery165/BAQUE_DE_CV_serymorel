@@ -1,39 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class Contact(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    email = models.EmailField()
-    telephone = models.CharField(max_length=20, null=True, blank=True)
-    adresse = models.TextField(null=True, blank=True)
-
-    def __str__(self):
-        return f"Contact de {self.user.username}"
-
-from django.db import models
-from django.contrib.auth.models import User
-
 class Personne(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     nom = models.CharField(max_length=100)
-    prenom = models.CharField(max_length=100)  # Correction de 'maxlength' en 'max_length'
+    prenom = models.CharField(max_length=100)
     date_naissance = models.DateField()
     photo = models.ImageField(upload_to='photos/', null=True, blank=True)
-<<<<<<< HEAD
-    email = models.EmailField()
-    telephone = models.CharField(max_length=20, null=True, blank=True)  # Correction de 'maxlength' en 'max_length'
-    adresse = models.TextField(null=True, blank=True)
-    cv = models.FileField(upload_to='cv/', null=True, blank=True)  # Ajout du champ pour le CV
-=======
->>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3
+    cv_personne = models.FileField(upload_to='cv/', null=True, blank=True)  # Renommé en 'cv_personne'
 
     def __str__(self):
         return f"{self.prenom} {self.nom}"
 
 class Experience(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    titre = models.CharField(maxlength=100)
-    entreprise = models.CharField(maxlength=100)
+    titre = models.CharField(max_length=100)
+    entreprise = models.CharField(max_length=100)
     date_debut = models.DateField()
     date_fin = models.DateField(null=True, blank=True)
     description = models.TextField()
@@ -43,8 +25,8 @@ class Experience(models.Model):
 
 class Formation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    diplome = models.CharField(maxlength=100)
-    institution = models.CharField(maxlength=100)
+    diplome = models.CharField(max_length=100)
+    institution = models.CharField(max_length=100)
     date_debut = models.DateField()
     date_fin = models.DateField(null=True, blank=True)
     description = models.TextField()
@@ -59,8 +41,8 @@ class Competence(models.Model):
         ('Avancé', 'Avancé'),
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    nom = models.CharField(maxlength=100)
-    niveau = models.CharField(maxlength=50)
+    nom = models.CharField(max_length=100)
+    niveau = models.CharField(max_length=50)
 
     def __str__(self):
         return f"{self.nom} - {self.niveau}"
@@ -72,14 +54,12 @@ class Langue(models.Model):
         ('Avancé', 'Avancé'),
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    langue = models.CharField(maxlength=50)
-    niveau = models.CharField(maxlength=50)
+    langue = models.CharField(max_length=50)
+    niveau = models.CharField(max_length=50)
 
     def __str__(self):
         return f"{self.langue} - {self.niveau}"
 
-<<<<<<< HEAD
-=======
 class Contact(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     email = models.EmailField()
@@ -89,10 +69,9 @@ class Contact(models.Model):
     def __str__(self):
         return self.email
 
->>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3
 class Loisir(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    nom = models.CharField(maxlength=100)
+    nom = models.CharField(max_length=100)
     description = models.TextField()
 
     def __str__(self):
@@ -105,17 +84,16 @@ class CV(models.Model):
         ('design3', 'Design 3'),
         ('design4', 'Design 4'),
     ]
-    design = models.CharField(maxlength=10, choices=DESIGN_CHOICES, default='design1')
-    title = models.CharField(maxlength=100, default='CV sans titre')
+    design = models.CharField(max_length=10, choices=DESIGN_CHOICES, default='design1')
+    title = models.CharField(max_length=100,default='CV sans titre')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    personne = models.ForeignKey(Personne, on_delete=models.CASCADE)
+    personne = models.ForeignKey(Personne, on_delete=models.CASCADE)  # Modifié de OneToOneField à ForeignKey
     experiences = models.ManyToManyField(Experience, blank=True)
     formations = models.ManyToManyField(Formation, blank=True)
     competences = models.ManyToManyField(Competence, blank=True)
     langues = models.ManyToManyField(Langue, blank=True)
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)  # Modifié de OneToOneField à ForeignKey
     loisirs = models.ManyToManyField(Loisir, blank=True)
-    contact = models.ForeignKey(Contact, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f"CV de {self.personne.prenom} {self.personne.nom}"

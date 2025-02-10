@@ -1,6 +1,6 @@
 # forms.py
 from django import forms
-from .models import Personne, Experience, Formation, Competence, Langue, Loisir, CV
+from .models import Personne, Experience, Formation, Competence, Langue, Contact, Loisir, CV
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -14,7 +14,7 @@ class CustomUserCreationForm(UserCreationForm):
 class PersonneForm(forms.ModelForm):
     class Meta:
         model = Personne
-        fields = ['nom', 'prenom', 'date_naissance', 'photo','cv']
+        fields = ['nom', 'prenom', 'date_naissance', 'photo','cv_personne']
 
 class ExperienceForm(forms.ModelForm):
     class Meta:
@@ -79,11 +79,10 @@ class CVForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
-    contact = forms.ModelChoiceField(queryset=Contact.objects.all(), required=False)  # Ajout du champ contact
 
     class Meta:
         model = CV
-        fields = ['design', 'title', 'personne', 'experiences', 'formations', 'competences', 'langues', 'loisirs', 'contact']
+        fields = ["personne", "contact", "experiences", "competences", "formations", "langues", "loisirs", "title", "design"]
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)  # Récupérer l'utilisateur
@@ -97,8 +96,6 @@ class CVForm(forms.ModelForm):
             self.fields['competences'].queryset = Competence.objects.filter(user=user)
             self.fields['langues'].queryset = Langue.objects.filter(user=user)
             self.fields['loisirs'].queryset = Loisir.objects.filter(user=user)
-<<<<<<< HEAD
-=======
             
             
             
@@ -132,5 +129,4 @@ class CustomUserCreationForm(UserCreationForm):
             raise forms.ValidationError("Le mot de passe doit contenir au moins 4 caractères.")
         return password1
 
->>>>>>> 14c331ac80e263397b5e7d5febe985d1860969c3
 
