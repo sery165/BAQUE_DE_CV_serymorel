@@ -6,18 +6,18 @@ nom admin:admincv
 mot de pass :morel&é"'
 nom des utilisateurs:TOUVOLY zozo
 
-devi tra
-ange toti
-JACQUE YAO
-ERIC YAO
-ange ZEBI
-MARIUS DAH 
-divine aman
-morel YAO
-
-
-
-
+devi_tra     mot de pass morel&é"'
+ange_zebi    mot de pass morel&é"'
+ange_toti    mot de pass morel&é"'
+adminsery    mot de pass morel&é"'
+admincopie   mot de pass morel&é"'
+admin_ajou  mot de pass morel&é"'
+BANTIEBOU  mot de pass morel&é"'
+ZELI        mot de pass morel&é"'
+zadi       mot de pass morel&é"'
+za         mot de pass morel&é"'
+yode       mot de pass morel&é"'
+touvoly_zozo  mot de pass morel&é"'
 
 
 
